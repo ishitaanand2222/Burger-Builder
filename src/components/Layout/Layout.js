@@ -11,9 +11,13 @@ const Layout = (props) =>{
         setShowSideDrawer(false);
     }
 
+    const sideDrawerToggleHandler = () => {
+        setShowSideDrawer(!showSideDrawer);
+    }
+
     return(
         <Auxillary>
-            <Toolbar />
+            <Toolbar drawerToggleClicked={sideDrawerToggleHandler} />
             <SideDrawer 
             open={showSideDrawer} 
             closed={sideDrawerClosedHandler}/>
