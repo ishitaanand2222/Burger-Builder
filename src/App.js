@@ -3,8 +3,7 @@ import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 
 
-class App extends React.Component {
-  render(){
+const App = () => {
     return (
       <div>
         <Layout>
@@ -12,7 +11,6 @@ class App extends React.Component {
         </Layout>
       </div>
     );
-  }
 }
 
 export default App;
