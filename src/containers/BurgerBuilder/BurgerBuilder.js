@@ -1,4 +1,5 @@
 import React, {useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Auxillary from "../../hoc/Auxillary/Auxillary";
 import Burger from '../../components/Burger/Burger'
 import BuildControls from "../../components/Burger/BuildControls/BuildControls";
@@ -23,6 +24,8 @@ const BurgerBuilder = () =>{
     const[purchasing, setPurchasing] = useState(false);
     const[loading, setLoading] = useState(false);
     const[error, setError] = useState(false);
+
+    const navigate = useNavigate();
 
     useEffect(() =>{
         axios.get('https://react-my-burger-7fa95-default-rtdb.firebaseio.com/ingredients.json')
@@ -91,32 +94,32 @@ const BurgerBuilder = () =>{
     }
 
     const purchaseContinueHandler = () => {
-        alert('You continue !');
-        setLoading(true);
-        const order = {
-            ingredients: ingredients,
-            price: totalPrice,
-            customer:{
-                name:'Ishita Anand',
-                address: {
-                    street:'Teststreet 1',
-                    zipCode:'3783',
-                    country:'India'
-                },
-                email: 'test@test.com'
-            },
-            deliveryMethod: 'fastest'
-        }
-        axios.post('/orders.json', order)
-        .then(response => {
-            setLoading(false);
-            setPurchasing(false);//stop loading because we got our response
-        })
-        .catch(error => {
-            setLoading(false);
-            setPurchasing(false);
-        });
-        
+        // alert('You continue !');
+        // setLoading(true);
+        // const order = {
+        //     ingredients: ingredients,
+        //     price: totalPrice,
+        //     customer:{
+        //         name:'Ishita Anand',
+        //         address: {
+        //             street:'Teststreet 1',
+        //             zipCode:'3783',
+        //             country:'India'
+        //         },
+        //         email: 'test@test.com'
+        //     },
+        //     deliveryMethod: 'fastest'
+        // }
+        // axios.post('/orders.json', order)
+        // .then(response => {
+        //     setLoading(false);
+        //     setPurchasing(false);//stop loading because we got our response
+        // })
+        // .catch(error => {
+        //     setLoading(false);
+        //     setPurchasing(false);
+        // });
+        navigate("/checkout");
     }
     
     const disabledInfo = {

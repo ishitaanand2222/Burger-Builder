@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CheckoutSummary from "../../components/CheckoutSummary/CheckoutSummary";
 
 const Checkout = () => {
@@ -8,9 +9,22 @@ const Checkout = () => {
         cheese: 1,
         bacon: 1
     })
+
+    const navigate = useNavigate();
+
+    const checkoutCancelledHandler = () => {
+        navigate(-1);
+    }
+
+    const checkoutContinuedHandler = () => {
+        navigate('/checkout/contact-data');
+    }
     return(
         <div>
-            <CheckoutSummary ingredients={ingredients}/>
+            <CheckoutSummary 
+               ingredients={ingredients}
+               checkoutCancelledHandler={checkoutCancelledHandler}
+               checkoutContinuedHandler={checkoutContinuedHandler}/>
         </div>
     )
 }
