@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Route, Routes} from 'react-router-dom';
 import { useNavigate, useLocation } from "react-router-dom";
 
-import CheckoutSummary from "../../components/CheckoutSummary/CheckoutSummary";
+import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import ContactData from "./ContactData/ContactData";
 
 const Checkout = () => {
