@@ -28,8 +28,12 @@ const Orders = () => {
      
     return(
         <div>
-            <Order/>
-            <Order/>
+            {orders.map(order => {
+                return <Order
+                          key = {order.id}
+                          ingredients = {order.ingredients}
+                          price = {+order.price}/>
+            })}
         </div>
     )
 }
