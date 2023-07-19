@@ -6,12 +6,8 @@ import CheckoutSummary from "../../components/CheckoutSummary/CheckoutSummary";
 import ContactData from "./ContactData/ContactData";
 
 const Checkout = () => {
-    const[ingredients, setIngredients] = useState({
-        salad: 1,
-        meat: 1,
-        cheese: 1,
-        bacon: 1
-    })
+    const[ingredients, setIngredients] = useState({});
+    const[price, setPrice] = useState(0);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -19,10 +15,16 @@ const Checkout = () => {
     useEffect(() => {
         const query = new URLSearchParams(location.search);
         const ingredients = {};
+        let price = 0;
         for(let param of query.entries()){
-            ingredients[param[0]] = +param[1];
+            if(param[0] === 'price'){
+                price = param[1];
+            }else{
+                ingredients[param[0]] = +param[1];
+            }
         }
         setIngredients(ingredients);
+        setPrice(price);
     },[])
 
     const checkoutCancelledHandler = () => {
@@ -42,7 +44,7 @@ const Checkout = () => {
                <Routes>
                  <Route 
                   path={'contact-data'}
-                  element={<ContactData/>}/>
+                  element={<ContactData ingredients={ingredients} price={price}/>}/>
                </Routes>
         </div>
     )
