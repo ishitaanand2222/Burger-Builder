@@ -119,7 +119,13 @@ const BurgerBuilder = () =>{
         //     setLoading(false);
         //     setPurchasing(false);
         // });
-        navigate("/checkout");
+        const queryParams = [];
+        for(let i in ingredients){
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(ingredients[i]));
+        }
+        const queryString = queryParams.join('&');
+
+        navigate(`/checkout?${queryString}`);
     }
     
     const disabledInfo = {

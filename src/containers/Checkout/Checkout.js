@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import CheckoutSummary from "../../components/CheckoutSummary/CheckoutSummary";
 
 const Checkout = () => {
@@ -11,7 +11,16 @@ const Checkout = () => {
     })
 
     const navigate = useNavigate();
+    const location = useLocation();
 
+    useEffect(() => {
+        const query = new URLSearchParams(location.search);
+        const ingredients = {};
+        for(let param of query.entries()){
+            ingredients[param[0]] = +param[1];
+        }
+        setIngredients(ingredients);
+    })
     const checkoutCancelledHandler = () => {
         navigate(-1);
     }
