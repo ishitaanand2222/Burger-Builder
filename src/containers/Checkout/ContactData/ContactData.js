@@ -19,7 +19,8 @@ const ContactData = (props) => {
                 validation:{
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             street:{
                 elementType: 'input',
@@ -31,7 +32,8 @@ const ContactData = (props) => {
                 validation:{
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             zipCode:{
                 elementType: 'input',
@@ -45,7 +47,8 @@ const ContactData = (props) => {
                     minLength: 6,
                     maxLength: 6
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             country:{
                 elementType: 'input',
@@ -57,7 +60,8 @@ const ContactData = (props) => {
                 validation:{
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             email: {
                 elementType: 'input',
@@ -69,7 +73,8 @@ const ContactData = (props) => {
                 validation:{
                     required: true
                 },
-                valid: false
+                valid: false,
+                touched: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -80,7 +85,8 @@ const ContactData = (props) => {
                     ]
                 },
                 value:'',
-                valid: false
+                valid: false,
+                touched: false
             }
     })
     const[loading, setLoading] = useState(false);
@@ -135,6 +141,7 @@ const ContactData = (props) => {
         updatedOrderEle.value = event.target.value;
         updatedOrderEle.valid = checkValidity(updatedOrderEle.value, updatedOrderEle.validation)
         updatedOrderForm[id] = updatedOrderEle;
+        updatedOrderEle.touched = true
         console.log(updatedOrderEle);
         setOrderForm(updatedOrderForm);
     }
@@ -154,7 +161,10 @@ const ContactData = (props) => {
                    elementType={formElement.config.elementType}
                    elementConfig = {formElement.config.elementConfig}
                    value = {formElement.config.value}
-                   changed = {(event) => {inputChangeHandler(event,formElement.id)}}/>
+                   changed = {(event) => {inputChangeHandler(event,formElement.id)}}
+                   Invalid = {!formElement.config.valid}
+                   touched = {formElement.config.touched}
+                   shouldValidate = {formElement.config.validation}/>
             ))}
             <Button btnType="Success">ORDER</Button>
         </form>
