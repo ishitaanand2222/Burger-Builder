@@ -73,19 +73,15 @@ const ContactData = (props) => {
     const orderHandler = (event) => {
         event.preventDefault();
         setLoading(true);
+        const formData = {};
+        for(let formUniqueIdentifier in orderForm){
+            console.log("heyy"+formUniqueIdentifier);
+            formData[formUniqueIdentifier] = orderForm[formUniqueIdentifier].value;
+        }
         const order = {
             ingredients: props.ingredients,
             price: props.price,
-            // customer:{
-            //     name:'Ishita Anand',
-            //     address: {
-            //         street:'Teststreet 1',
-            //         zipCode:'3783',
-            //         country:'India'
-            //     },
-            //     email: 'test@test.com'
-            // },
-            // deliveryMethod: 'fastest'
+            orderData: formData
         }
         axios.post('/orders.json', order)
         .then(response => {
@@ -115,7 +111,7 @@ const ContactData = (props) => {
         });
     }
     let form = ( 
-        <form>
+        <form onSubmit={orderHandler}>
             {formElementsArray.map( formElement => (
                 <Input 
                    key = {formElement.id}
@@ -124,7 +120,7 @@ const ContactData = (props) => {
                    value = {formElement.config.value}
                    changed = {(event) => {inputChangeHandler(event,formElement.id)}}/>
             ))}
-            <Button btnType="Success" clicked={orderHandler}>ORDER</Button>
+            <Button btnType="Success">ORDER</Button>
         </form>
     );
     if(loading){
