@@ -98,6 +98,15 @@ const ContactData = (props) => {
         });
     }
 
+    const inputChangeHandler = (event, id) => {
+        console.log(event.target.value);
+        const updatedOrderForm = {...orderForm};
+        const updatedOrderEle = {...updatedOrderForm[id]};
+        updatedOrderEle.value = event.target.value;
+        updatedOrderForm[id] = updatedOrderEle;
+        setOrderForm(updatedOrderForm);
+    }
+
     const formElementsArray = [];
     for(let key in orderForm){
         formElementsArray.push({
@@ -112,7 +121,8 @@ const ContactData = (props) => {
                    key = {formElement.id}
                    elementType={formElement.config.elementType}
                    elementConfig = {formElement.config.elementConfig}
-                   value = {formElement.config.value}/>
+                   value = {formElement.config.value}
+                   changed = {(event) => {inputChangeHandler(event,formElement.id)}}/>
             ))}
             <Button btnType="Success" clicked={orderHandler}>ORDER</Button>
         </form>
