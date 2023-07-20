@@ -15,7 +15,11 @@ const ContactData = (props) => {
                     type: 'text',
                     placeholder: 'Your Name'
                 },
-                value:''
+                value:'',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             street:{
                 elementType: 'input',
@@ -23,7 +27,11 @@ const ContactData = (props) => {
                     type: 'text',
                     placeholder: 'Street'
                 },
-                value:''
+                value:'',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             zipCode:{
                 elementType: 'input',
@@ -31,7 +39,13 @@ const ContactData = (props) => {
                     type: 'text',
                     placeholder: 'ZIP Code'
                 },
-                value:''
+                value:'',
+                validation:{
+                    required: true,
+                    minLength: 6,
+                    maxLength: 6
+                },
+                valid: false
             },
             country:{
                 elementType: 'input',
@@ -39,7 +53,11 @@ const ContactData = (props) => {
                     type: 'text',
                     placeholder: 'Country'
                 },
-                value:''
+                value:'',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             email: {
                 elementType: 'input',
@@ -47,7 +65,11 @@ const ContactData = (props) => {
                     type: 'email',
                     placeholder: 'Your E-mail'
                 },
-                value:''
+                value:'',
+                validation:{
+                    required: true
+                },
+                valid: false
             },
             deliveryMethod: {
                 elementType: 'select',
@@ -57,16 +79,11 @@ const ContactData = (props) => {
                         {value:'cheapest', displayValue:'Cheapest'}
                     ]
                 },
-                value:''
+                value:'',
+                valid: false
             }
     })
     const[loading, setLoading] = useState(false);
-    const[name, setName] = useState('');
-    const[email, setEmail] = useState('');
-    const[address, setAddress] = useState({
-        street:'',
-        postalCode:''
-    })
 
     const navigate = useNavigate();
 
@@ -94,12 +111,31 @@ const ContactData = (props) => {
         });
     }
 
+    const checkValidity = (value, rules) => {
+        let isValid = true;
+
+        if(rules.required){
+            isValid = value.trim() !== '' && isValid;
+        }
+
+        if(rules.minLength){
+            isValid = value.length >= rules.minLength  && isValid;
+        }
+
+        if(rules.maxLength){
+            isValid = value.length <= rules.maxLength  && isValid;
+        }
+
+        return isValid;
+    }
+
     const inputChangeHandler = (event, id) => {
-        console.log(event.target.value);
         const updatedOrderForm = {...orderForm};
         const updatedOrderEle = {...updatedOrderForm[id]};
         updatedOrderEle.value = event.target.value;
+        updatedOrderEle.valid = checkValidity(updatedOrderEle.value, updatedOrderEle.validation)
         updatedOrderForm[id] = updatedOrderEle;
+        console.log(updatedOrderEle);
         setOrderForm(updatedOrderForm);
     }
 
