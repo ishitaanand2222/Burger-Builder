@@ -18,7 +18,6 @@ const BurgerBuilder = (props) =>{
 
     console.log("[BurgerBuilder.js]", props.ings);
 
-    const[purchasable, setPurchasable] = useState(false);
     const[purchasing, setPurchasing] = useState(false);
     const[loading, setLoading] = useState(false);
     const[error, setError] = useState(false);
@@ -44,7 +43,7 @@ const BurgerBuilder = (props) =>{
                 return sum+el;
             }, 0);
         
-        setPurchasable(sum > 0)
+        return (sum > 0)
     }
 
     const purchaseHandler = () =>{
@@ -85,7 +84,7 @@ const BurgerBuilder = (props) =>{
                         ingredientAdded = {props.onIngredientAdded}
                         ingredientRemoved = {props.onIngredientRemoved}
                         disabled = {disabledInfo}
-                        purchasable = {purchasable}
+                        purchasable = {updatePurchaseState(props.ings)}
                         ordered = {purchaseHandler}
                         price = {props.price}/>
             </Auxillary>
