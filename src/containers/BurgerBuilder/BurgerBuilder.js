@@ -28,11 +28,11 @@ const BurgerBuilder = () =>{
     const navigate = useNavigate();
 
     useEffect(() =>{
-        axios.get('https://react-my-burger-7fa95-default-rtdb.firebaseio.com/ingredients.json')
-        .then(response => {
-            setIngredients(response.data);
-        })
-        .catch(error => setError(true));
+        // axios.get('https://react-my-burger-7fa95-default-rtdb.firebaseio.com/ingredients.json')
+        // .then(response => {
+        //     setIngredients(response.data);
+        // })
+        // .catch(error => setError(true));
     },[])
 
 
