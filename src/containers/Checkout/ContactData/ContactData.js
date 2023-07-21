@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
+
 import classes from './ContactData.module.css';
 import Button from "../../../components/UI/Button/Button";
 import axios from "../../../axios-orders";
@@ -104,7 +106,7 @@ const ContactData = (props) => {
             formData[formUniqueIdentifier] = orderForm[formUniqueIdentifier].value;
         }
         const order = {
-            ingredients: props.ingredients,
+            ingredients: props.ings,
             price: props.price,
             orderData: formData
         }
@@ -191,4 +193,10 @@ const ContactData = (props) => {
 
 }
 
-export default ContactData;
+const mapStateToProps = state => {
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
+export default connect(mapStateToProps)(ContactData);
