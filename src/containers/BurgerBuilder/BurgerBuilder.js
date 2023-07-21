@@ -12,21 +12,12 @@ import Spinner from "../../components/UI/Spinner/Spinner";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as actionTypes from '../../store/actions'
 
-const INGREDIENT_PRICES = {
-    salad: 0.5,
-    cheese: 0.4,
-    meat: 1.3,
-    bacon: 0.7
-}
-
-
 const BurgerBuilder = (props) =>{
     console.log('Inside world');
 
 
     console.log("[BurgerBuilder.js]", props.ings);
 
-    const[totalPrice, setTotalPrice] = useState(4);
     const[purchasable, setPurchasable] = useState(false);
     const[purchasing, setPurchasing] = useState(false);
     const[loading, setLoading] = useState(false);
@@ -56,42 +47,6 @@ const BurgerBuilder = (props) =>{
         setPurchasable(sum > 0)
     }
 
-    
-    const addIngredientHandler = (type) =>{
-        const oldCount = props.ings[type];
-        const updateCount = oldCount+1;
-        const updatedIngredients = {
-            ...props.ings
-        };
-
-        updatedIngredients[type] = updateCount;
-        const priceAddition = INGREDIENT_PRICES[type];
-        const oldPrice = totalPrice;
-        const newPrice = oldPrice + priceAddition;
-        setTotalPrice(newPrice);
-        //setIngredients(updatedIngredients);
-        updatePurchaseState(updatedIngredients);
-    }
-
-    const removeIngredientHandler = (type) => {
-        const oldCount = props.ings[type];
-        if(oldCount <=0 ){
-            return;
-        }
-        const updateCount = oldCount-1;
-        const updatedIngredients = {
-            ...props.ings
-        }
-
-        updatedIngredients[type] = updateCount;
-        const priceDeletion = INGREDIENT_PRICES[type];
-        const oldPrice = totalPrice;
-        const newPrice = oldPrice  - priceDeletion;
-        setTotalPrice(newPrice);
-        //setIngredients(updatedIngredients);
-        updatePurchaseState(updatedIngredients);
-    }
-
     const purchaseHandler = () =>{
         setPurchasing(true)
     }
@@ -105,7 +60,7 @@ const BurgerBuilder = (props) =>{
         for(let i in props.ings){
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(props.ings[i]));
         }
-        queryParams.push('price=' + totalPrice);
+        queryParams.push('price=' + props.price);
         const queryString = queryParams.join('&');
 
         navigate(`/checkout?${queryString}`);
@@ -132,14 +87,14 @@ const BurgerBuilder = (props) =>{
                         disabled = {disabledInfo}
                         purchasable = {purchasable}
                         ordered = {purchaseHandler}
-                        price = {totalPrice}/>
+                        price = {props.price}/>
             </Auxillary>
         )
         orderSummary = <OrderSummary 
         ingredients={props.ings}
         purchaseCancelled = {purchaseCancelHandler}
         purchaseContinued = {purchaseContinueHandler}
-        price = {totalPrice}/>
+        price = {props.price}/>
     }
 
     if(loading){
@@ -160,14 +115,15 @@ const BurgerBuilder = (props) =>{
 
 const mapStateToProps = state => {
     return{
-        ings: state.ingredients
+        ings: state.ingredients,
+        price: state.totalPrice
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded : (ingName) => dispatch({type: actionTypes.ADD_INGREDIENT, ingredientName: ingName}),
-        onIngredientRemoved : (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName})
+        onIngredientRemoved : (ingName) => dispatch({type: actionTypes.REMOVE_INGREDIENT, ingredientName: ingName}),
     }
 }
 
