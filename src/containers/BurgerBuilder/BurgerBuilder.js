@@ -1,7 +1,7 @@
 import React, {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
-
+import thunk from 'redux-thunk';
 
 import Auxillary from "../../hoc/Auxillary/Auxillary";
 import Burger from '../../components/Burger/Burger'
@@ -20,17 +20,11 @@ const BurgerBuilder = (props) =>{
     console.log("[BurgerBuilder.js]", props.ings);
 
     const[purchasing, setPurchasing] = useState(false);
-    const[loading, setLoading] = useState(false);
-    const[error, setError] = useState(false);
 
     const navigate = useNavigate();
 
     useEffect(() =>{
-        // axios.get('https://react-my-burger-7fa95-default-rtdb.firebaseio.com/ingredients.json')
-        // .then(response => {
-        //     setIngredients(response.data);
-        // })
-        // .catch(error => setError(true));
+       
     },[])
 
 
@@ -68,7 +62,7 @@ const BurgerBuilder = (props) =>{
     }
 
     let orderSummary = null;
-    let burger = error ? <p>Ingredients can't be loaded</p>:<Spinner/>
+    let burger = props.error ? <p>Ingredients can't be loaded</p>:<Spinner/>
 
     if(props.ings){
         burger = (
@@ -90,9 +84,6 @@ const BurgerBuilder = (props) =>{
         price = {props.price}/>
     }
 
-    if(loading){
-        orderSummary = <Spinner />
-        }
     return(
         <Auxillary>
             <Modal show={purchasing} modalClosed={purchaseCancelHandler}>
@@ -109,7 +100,8 @@ const BurgerBuilder = (props) =>{
 const mapStateToProps = state => {
     return{
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        error: state.error
     }
 }
 
