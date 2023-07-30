@@ -24,7 +24,7 @@ const BurgerBuilder = (props) =>{
     const navigate = useNavigate();
 
     useEffect(() =>{
-       
+        props.onInitIngredient()
     },[])
 
 
@@ -108,7 +108,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded : (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        onIngredientRemoved : (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
+        onIngredientRemoved : (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)), 
+        onInitIngredient : () => dispatch(burgerBuilderActions.initIngredients())
+
     }
 }
 
