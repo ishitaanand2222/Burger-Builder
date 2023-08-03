@@ -94,10 +94,7 @@ const ContactData = (props) => {
                 touched: false
             }
     })
-    const[loading, setLoading] = useState(false);
     const[isFormValid, setIsFormValid] = useState(false);
-
-    const navigate = useNavigate();
 
     const orderHandler = (event) => {
         event.preventDefault();
@@ -175,7 +172,7 @@ const ContactData = (props) => {
             <Button btnType="Success" disabled = {!isFormValid} >ORDER</Button>
         </form>
     );
-    if(loading){
+    if(props.loading){
         form = <Spinner/>
     }
     return(
@@ -190,12 +187,13 @@ const ContactData = (props) => {
 const mapStateToProps = state => {
     return {
         ings: state.ingredients,
-        price: state.totalPrice
+        price: state.totalPrice,
+        loading: state.loading
     }
 }
 
 const mapDispatchToProps = dispatch => ({
-    onOrderBurger: (orderData) => dispatch(actions.purchaseBurgerStart(orderData))
+    onOrderBurger: (orderData) => dispatch(actions.purchaseBurger(orderData))
 });
 
-export default connect(mapStateToProps)(withErrorHandler(ContactData,axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData,axios));
