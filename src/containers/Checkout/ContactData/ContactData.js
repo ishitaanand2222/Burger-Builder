@@ -110,15 +110,15 @@ const ContactData = (props) => {
             price: props.price,
             orderData: formData
         }
-        axios.post('/orders.json', order)
-        .then(response => {
-            setLoading(false);//stop loading because we got our response
-            navigate('/');
-        })
-        .catch(error => {
-            setLoading(false);
+        // axios.post('/orders.json', order)
+        // .then(response => {
+        //     setLoading(false);//stop loading because we got our response
+        //     navigate('/');
+        // })
+        // .catch(error => {
+        //     setLoading(false);
             
-        });
+        // });
     }
 
     const checkValidity = (value, rules) => {
